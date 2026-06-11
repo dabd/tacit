@@ -8,7 +8,7 @@ One plugin, **prose**. Three parts:
 
 | Part | What it does | When it runs |
 |------|--------------|--------------|
-| `prose` skill | One editing pass with three ordered layers: structure (Williams & Bizup), concision, surface de-slop (adapted from Hardik Pandya's stop-slop) | On any draft or edit request |
+| `prose` skill | One editing pass with three ordered layers: structure (Williams & Bizup), concision, surface de-slop (adapted from Hardik Pandya's stop-slop) | On any draft or edit request; explicitly via /prose:polish |
 | `laconic` skill | Terse declarative register, Klinkenborg-inspired | Opt-in, via /prose:laconic or an explicit ask |
 | `prose-gate` Stop hook | Lints the final reply for the mechanical floor: unicode dashes, tell-phrases, figurative verbs, emphasis adverbs, telegraphed contrasts. Blocks once per turn so the reply gets revised | Every turn |
 
@@ -46,7 +46,8 @@ The plugin declares no version. Every commit is one.
 
 - Ask for a draft, an edit, or feedback on work prose. The `prose` skill
   fires on its own.
-- `/prose:polish` - the full pass on a pasted draft or selection.
+- `/prose:polish` - the command form of the `prose` skill: the full pass on
+  a pasted draft or selection.
 - `/prose:laconic` - the terse register, on request.
 - The gate needs nothing from you. If a reply stops short and revises
   itself, that was the gate.
