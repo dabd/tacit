@@ -1,0 +1,16 @@
+{
+  "name": "dabd-writing-tools",
+  "owner": {
+    "name": "dabd"
+  },
+  "description": "Writing tools for software engineers: one prose editor (structure, concision, surface), an opt-in laconic register, and a deterministic Stop-hook prose gate.",
+  "plugins": [
+    {
+      "name": "prose",
+      "source": "./plugins/prose",
+      "description": "One-pass editor for work prose. Structure and concision via the Williams & Bizup method, surface de-slop adapted from Hardik Pandya's stop-slop, an opt-in Klinkenborg-inspired laconic register, and a Stop hook that lints final replies for mechanical style violations. Replaces the clarity-and-grace, laconic, and stop-slop plugins.",
+      "category": "productivity",
+      "tags": ["writing", "editing", "clarity", "style", "ai-tells"]
+    }
+  ]
+}
