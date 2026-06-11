@@ -17,6 +17,7 @@ comes after, for the reader who needs it.
 - [Async / Slack messages](#async--slack-messages)
 - [Status updates & standup](#status-updates--standup)
 - [Commit messages](#commit-messages)
+- [Tickets (JIRA)](#tickets-jira)
 
 ---
 
@@ -140,3 +141,35 @@ Convention most teams follow:
 
 Input: fixed the bug
 Output: fix(auth): serialize token refresh to prevent premature logout
+
+## Tickets (JIRA)
+
+A ticket is a contract for future work, often picked up by someone with no
+context, months later. It describes the problem and the finish line, never
+the implementation.
+
+- **Title: the problem, findable.** Specific enough that a search next
+  quarter hits it. "Token refresh races under concurrent requests" beats
+  "Auth issues".
+- **Problem first.** What happens, where, who it affects, and how to
+  reproduce or observe it. Link the evidence (dashboard, incident, log
+  query); don't paste walls of output.
+- **Acceptance criteria: observable outcomes.** What must be true for the
+  ticket to close. Each criterion checkable by someone other than the
+  author.
+- **No implementation details.** Naming the fix locks in today's guess; the
+  assignee may know a better one, and the codebase will have moved. If a
+  design discussion is needed, that's a comment or a doc, not the ticket
+  body.
+- **Severity as facts.** "Affects all EU tenants since 14:00 UTC" beats
+  "critical!!". Let the reader weigh it.
+
+Input: Auth is broken again, we should add a mutex around the token refresh
+like we discussed, pretty urgent.
+Output:
+**Title:** Concurrent requests race on token refresh, logging users out
+**Problem:** Two simultaneous 401 retries each trigger a refresh; the second
+overwrites the first's token and the session drops. ~40 logouts/day since
+the 2.31 rollout (dashboard link).
+**Acceptance criteria:** concurrent refreshes produce one token; the logout
+rate returns to pre-2.31 baseline; a regression test covers the race.

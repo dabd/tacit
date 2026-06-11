@@ -204,8 +204,8 @@ prose read as generated.
 Each genre has a shape: what goes first, how long, how blunt. When the task
 names or implies one (PR description, code review comment, design doc or
 RFC, incident update or postmortem, async message, status update, commit
-message), read `references/genre-playbook.md` before editing. The unifying
-rule: bottom line up front.
+message, ticket), read `references/genre-playbook.md` before editing. The
+unifying rule: bottom line up front.
 
 ## The laconic register (opt-in)
 
