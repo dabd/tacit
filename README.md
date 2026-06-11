@@ -66,8 +66,9 @@ plugin (`/plugin disable prose`) or delete the Stop entry in
 - prose and laconic skills by dabd (MIT, see [LICENSE](LICENSE)).
 - Structure and concision layers encode the method of Joseph M. Williams and
   Joseph Bizup, *Style: Lessons in Clarity and Grace*. The laconic register
-  is inspired by Verlyn Klinkenborg, *Several Short Sentences About
-  Writing*. No text from either book; original wording only.
+  blends Verlyn Klinkenborg's sentence-first discipline (*Several Short
+  Sentences About Writing*) with the plainness of Grant's field orders. No
+  text from the books; original wording only.
 - The surface layer and gate adapt the tell inventory of
   [stop-slop](https://github.com/hardikpandya/stop-slop) by Hardik Pandya
   (MIT), re-tuned for work writing.
