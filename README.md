@@ -12,19 +12,26 @@ The marketplace contains one plugin, **prose**, with three parts:
 | `laconic` skill | Terse declarative register, Klinkenborg-inspired | Opt-in, via /prose:laconic or an explicit ask |
 | `prose-gate` Stop hook | Lints the final reply for the mechanical floor: unicode dashes, tell-phrases, figurative verbs, emphasis adverbs, telegraphed contrasts. Blocks once per turn so the reply gets revised | Every turn |
 
-## Why one plugin instead of a pipeline
+## How the layers work together
 
-An earlier design split this into three plugins (clarity-and-grace, laconic,
-stop-slop) composed by an EDITING-PROTOCOL.md. That failed structurally: the
-passes owned the same rules (adverbs, hedges, fragments) at three different
-severities, two of them triggered on the same requests in undefined order,
-and the document that resolved their conflicts never entered the model's
-context at runtime. A skill only works if the text the model loads is
-self-sufficient. So the layers and their tie-breakers live inside one skill,
-the register stays a separate opt-in skill, and the part that must never be
-forgotten (the mechanical floor) is enforced by a hook instead of by memory.
-This repo supersedes EDITING-PROTOCOL.md and the dabd/clarity-and-grace
-repo.
+The `prose` skill applies its three layers in a fixed order, because each
+layer depends on the one before:
+
+1. **Structure** (Williams & Bizup) makes each sentence clear: characters as
+   subjects, actions as verbs, old information before new, emphasis in the
+   stress position. There is no point polishing a sentence that still hides
+   who does what.
+2. **Concision** tightens the clear sentence: prune filler, choose the plain
+   word over the inflated one, swap figurative-verb tics for plain verbs.
+   One guardrail: cut words, never load-bearing reasoning.
+3. **Surface** runs last, on finished sentences: tell-phrases, emphasis
+   adverbs, contrast templates, rhythm. It removes the patterns that make
+   prose read as generated.
+
+The `laconic` register sits outside the pass. It imposes a voice, so it runs
+only on request, after the three layers. The gate backs the whole thing:
+whatever slips through in a reply, the Stop hook checks against the
+mechanical floor and blocks once so the reply gets fixed.
 
 ## Install
 
