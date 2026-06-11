@@ -1,10 +1,10 @@
 # tacit
 
-A Claude Code plugin marketplace for the prose a software engineer writes:
-Slack messages, PR descriptions, review comments, design docs, incident
-updates, commit messages.
+A Claude Code plugin marketplace for the prose engineers write: Slack
+messages, PR descriptions, review comments, design docs, incident updates,
+commit messages.
 
-The marketplace contains one plugin, **prose**, with three parts:
+One plugin, **prose**. Three parts:
 
 | Part | What it does | When it runs |
 |------|--------------|--------------|
@@ -14,24 +14,23 @@ The marketplace contains one plugin, **prose**, with three parts:
 
 ## How the layers work together
 
-The `prose` skill applies its three layers in a fixed order, because each
-layer depends on the one before:
+The `prose` skill applies its layers in a fixed order. Each depends on the
+one before:
 
 1. **Structure** (Williams & Bizup) makes each sentence clear: characters as
    subjects, actions as verbs, old information before new, emphasis in the
-   stress position. There is no point polishing a sentence that still hides
-   who does what.
+   stress position. Until the actor is visible, polish is wasted.
 2. **Concision** tightens the clear sentence: prune filler, choose the plain
    word over the inflated one, swap figurative-verb tics for plain verbs.
-   One guardrail: cut words, never load-bearing reasoning.
+   The guardrail: cut words, never load-bearing reasoning.
 3. **Surface** runs last, on finished sentences: tell-phrases, emphasis
-   adverbs, contrast templates, rhythm. It removes the patterns that make
-   prose read as generated.
+   adverbs, contrast templates, rhythm. It strips the patterns that read as
+   generated.
 
-The `laconic` register sits outside the pass. It imposes a voice, so it runs
-only on request, after the three layers. The gate backs the whole thing:
-whatever slips through in a reply, the Stop hook checks against the
-mechanical floor and blocks once so the reply gets fixed.
+The `laconic` register sits outside the pass. It imposes a voice. It runs on
+request only, after the three layers. The gate backs all of it: the Stop
+hook checks every reply against the mechanical floor and blocks once on a
+violation.
 
 ## Install
 
@@ -40,20 +39,20 @@ mechanical floor and blocks once so the reply gets fixed.
 /plugin install prose@tacit
 ```
 
-The plugin has no explicit version, so every commit is a new version;
+The plugin declares no version. Every commit is one.
 `/plugin marketplace update tacit` pulls the latest.
 
 ## Use
 
-- Ask for any draft, edit, or feedback on work prose: the `prose` skill
-  handles it without being named.
+- Ask for a draft, an edit, or feedback on work prose. The `prose` skill
+  fires on its own.
 - `/prose:polish` - the full pass on a pasted draft or selection.
 - `/prose:laconic` - the terse register, on request.
 - The gate needs nothing from you. If a reply stops short and revises
   itself, that was the gate.
 
-To tune the gate, edit the pattern lists in
-`plugins/prose/hooks/prose-gate.sh` and keep
+Tune the gate by editing the pattern lists in
+`plugins/prose/hooks/prose-gate.sh`. Keep
 `plugins/prose/hooks/test-prose-gate.sh` green. To turn it off, disable the
 plugin (`/plugin disable prose`) or delete the Stop entry in
 `plugins/prose/hooks/hooks.json`.
