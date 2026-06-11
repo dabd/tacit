@@ -2,8 +2,7 @@
 
 A Claude Code plugin marketplace for the prose a software engineer writes:
 Slack messages, PR descriptions, review comments, design docs, incident
-updates, commit messages. Named for Tacitus, whose name is Latin for "the
-silent one".
+updates, commit messages.
 
 The marketplace contains one plugin, **prose**, with three parts:
 
