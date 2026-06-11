@@ -43,19 +43,6 @@ mechanical floor and blocks once so the reply gets fixed.
 The plugin has no explicit version, so every commit is a new version;
 `/plugin marketplace update tacit` pulls the latest.
 
-Migrating from this marketplace's earlier names (dabd-writing-tools, or the
-single-repo dabd/clarity-and-grace):
-
-```
-/plugin uninstall prose@dabd-writing-tools
-/plugin marketplace remove dabd-writing-tools
-/plugin marketplace add dabd/tacit
-/plugin install prose@tacit
-```
-
-If the old install was `clarity-and-grace@dabd-writing-tools`, uninstall
-that name instead.
-
 ## Use
 
 - Ask for any draft, edit, or feedback on work prose: the `prose` skill
