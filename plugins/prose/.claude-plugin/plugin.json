@@ -1,6 +1,6 @@
 {
   "name": "prose",
-  "description": "Edit and draft work prose in one ordered pass: structure (characters as subjects, actions as verbs, old-to-new flow, emphasis in the stress position), concision (prune, plain diction, figurative-verb tics), and surface (AI-tell phrases, emphasis adverbs, telegraphed contrasts, rhythm). Includes the opt-in laconic register and the prose-gate Stop hook that lints final replies. Methods from Williams & Bizup, Klinkenborg, and Hardik Pandya's stop-slop, encoded in original wording; no text from the source books.",
+  "description": "Edit and draft work prose in one ordered pass: structure (characters as subjects, actions as verbs, old-to-new flow, emphasis in the stress position), concision (prune, plain diction, figurative-verb tics), and surface (AI-tell phrases, emphasis adverbs, telegraphed contrasts, rhythm). Includes the opt-in laconic register. Methods from Williams & Bizup, Klinkenborg, and Hardik Pandya's stop-slop, encoded in original wording; no text from the source books.",
   "author": {
     "name": "dabd"
   },

@@ -178,7 +178,7 @@ prose read as generated.
    behavior. Exception: blameless postmortems and genuinely unknown actors;
    the genre playbook governs there.
 4. **No em or en dashes.** Use a comma, colon, period, parenthesis, or
-   ' - '. (House rule; hooks normalize files and gate replies.)
+   ' - '. (House rule; a hook normalizes files, replies are on you.)
 5. **The contrast templates are banned, even for earned contrasts.** "Not
    just X but Y", "isn't X, it's Y", "the answer isn't X", and negative
    listings ("It's not A. It's not B. It's C.") never appear. When the
@@ -225,16 +225,15 @@ Generic "edit this" requests never trigger it.
   layers, then point out the one or two structural choices you made.
 
 Keep your own explanation as clean as the revision; practice what the skill
-preaches. Two presentation rules: a draft you produce is your prose and gets
-gated wherever it appears (inline or blockquoted), so write it clean; and
-when you name a phrase you cut, put it in backticks (`worth noting`), and
-put any verbatim third-party text you quote in a code fence. Backticks and
-fences are the only gate exemptions.
+preaches. Two presentation rules: a draft you produce is your prose and
+these rules apply wherever it appears (inline or blockquoted), so write it
+clean; and when you name a phrase you cut, put it in backticks
+(`worth noting`), and put any verbatim third-party text you quote in a code
+fence. Backticks and fences are the only exemptions.
 
 ## Enforcement
 
-A Stop hook (`prose-gate`) lints final replies for the mechanical floor:
-unicode dashes, tell-phrases, figurative verb tics, emphasis adverbs,
-telegraphed contrasts. If it blocks a reply, fix the listed items and finish
-again; don't argue with the gate. The judgment layers - structure, cohesion,
-emphasis - are yours alone; no linter checks them.
+A PreToolUse hook normalizes unicode dashes in files you write. Everything
+else - the mechanical floor and the judgment layers alike - is on you; no
+linter checks your replies. Apply the floor as you draft, not as a cleanup
+pass.

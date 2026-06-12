@@ -4,13 +4,12 @@ A Claude Code plugin marketplace for the prose engineers write: Slack
 messages, PR descriptions, review comments, design docs, incident updates,
 commit messages.
 
-One plugin, **prose**. Three parts:
+One plugin, **prose**. Two parts:
 
 | Part | What it does | When it runs |
 |------|--------------|--------------|
 | `prose` skill | One editing pass with three ordered layers: structure (Williams & Bizup), concision, surface de-slop (adapted from Hardik Pandya's stop-slop) | On any draft or edit request; explicitly via /prose:polish |
 | `laconic` skill | Terse declarative register, Klinkenborg-inspired | Opt-in, via /prose:laconic or an explicit ask |
-| `prose-gate` Stop hook | Lints the final reply for the mechanical floor: unicode dashes, tell-phrases, figurative verbs, emphasis adverbs, telegraphed contrasts. Blocks once per turn so the reply gets revised | Every turn |
 
 ## How the layers work together
 
@@ -28,9 +27,7 @@ one before:
    generated.
 
 The `laconic` register sits outside the pass. It imposes a voice. It runs on
-request only, after the three layers. The gate backs all of it: the Stop
-hook checks every reply against the mechanical floor and blocks once on a
-violation.
+request only, after the three layers.
 
 ## Install
 
@@ -49,14 +46,6 @@ The plugin declares no version. Every commit is one.
 - `/prose:polish` - the command form of the `prose` skill: the full pass on
   a pasted draft or selection.
 - `/prose:laconic` - the terse register, on request.
-- The gate needs nothing from you. If a reply stops short and revises
-  itself, that was the gate.
-
-Tune the gate by editing the pattern lists in
-`plugins/prose/hooks/prose-gate.sh`. Keep
-`plugins/prose/hooks/test-prose-gate.sh` green. To turn it off, disable the
-plugin (`/plugin disable prose`) or delete the Stop entry in
-`plugins/prose/hooks/hooks.json`.
 
 ## Credits
 
@@ -66,6 +55,6 @@ plugin (`/plugin disable prose`) or delete the Stop entry in
   register blends Verlyn Klinkenborg's sentence-first discipline (*Several
   Short Sentences About Writing*) with the plainness of Grant's field
   orders. No text from the books; original wording only.
-- The surface layer and the gate adapt the tell inventory of
+- The surface layer adapts the tell inventory of
   [stop-slop](https://github.com/hardikpandya/stop-slop) by Hardik Pandya
   (MIT), re-tuned for work writing.
