@@ -57,6 +57,21 @@ class RunEvalsTest(unittest.TestCase):
         self.assertEqual(grade.status, "manual")
         self.assertEqual(grade.manual_checks, ["uncertainty is not strengthened"])
 
+    def test_compression_case_allows_semantically_equivalent_wording(self):
+        cases = module.load_behavior_cases(PLUGIN_ROOT / "evals" / "cases.jsonl")
+        case = next(
+            item for item in cases if item["id"] == "compress-cross-section-duplication"
+        )
+
+        grade = module.grade_output(
+            case,
+            "## Migration safety\n\n"
+            "Safe: the old column stays until every instance runs the new code.",
+        )
+
+        self.assertEqual(grade.status, "manual")
+        self.assertFalse(grade.failures)
+
     def test_grade_output_detects_unsolicited_explanation(self):
         case = {
             "id": "output-only",
