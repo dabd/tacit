@@ -1,60 +1,106 @@
 # tacit
 
-A Claude Code plugin marketplace for the prose engineers write: Slack
-messages, PR descriptions, review comments, design docs, incident updates,
-commit messages.
+Writing tools for software engineers. The `prose` plugin provides three
+separate operations:
 
-One plugin, **prose**. Two parts:
+| Mode | Purpose | Invocation |
+|---|---|---|
+| `prose` | Conservative drafting and editing | Automatic only for explicit writing or prose-review requests; explicit with `/prose:polish` |
+| `compress` | Maximum reduction under a preservation contract | `/prose:compress` or an explicit request for extreme or hard-limit concision |
+| `laconic` | A terse declarative register that preserves content | `/prose:laconic` or an explicit request for that register |
 
-| Part | What it does | When it runs |
-|------|--------------|--------------|
-| `prose` skill | One editing pass with three ordered layers: structure (Williams & Bizup), concision, surface de-slop (adapted from Hardik Pandya's stop-slop) | On any draft or edit request; explicitly via /prose:polish |
-| `laconic` skill | Terse declarative register, Klinkenborg-inspired | Opt-in, via /prose:laconic or an explicit ask |
+Normal editing, register changes, and semantic compression are intentionally
+separate. See [Foundations](plugins/prose/FOUNDATIONS.md) for the principles,
+sources, exceptions, and Tacit-specific contributions behind that design.
 
-## How the layers work together
+## Install in Claude Code
 
-The `prose` skill applies its layers in a fixed order. Each depends on the
-one before:
-
-1. **Structure** (Williams & Bizup) makes each sentence clear: characters as
-   subjects, actions as verbs, old information before new, emphasis in the
-   stress position. Until the actor is visible, polish is wasted.
-2. **Concision** tightens the clear sentence: prune filler, choose the plain
-   word over the inflated one, swap figurative-verb tics for plain verbs.
-   The guardrail: cut words, never load-bearing reasoning.
-3. **Surface** runs last, on finished sentences: tell-phrases, emphasis
-   adverbs, contrast templates, rhythm. It strips the patterns that read as
-   generated.
-
-The `laconic` register sits outside the pass. It imposes a voice. It runs on
-request only, after the three layers.
-
-## Install
-
-```
+```text
 /plugin marketplace add dabd/tacit
 /plugin install prose@tacit
 ```
 
-The plugin declares no version. Every commit is one.
-`/plugin marketplace update tacit` pulls the latest.
+For local testing:
+
+```bash
+claude --plugin-dir ./plugins/prose
+```
 
 ## Use
 
-- Ask for a draft, an edit, or feedback on work prose. The `prose` skill
-  fires on its own.
-- `/prose:polish` - the command form of the `prose` skill: the full pass on
-  a pasted draft or selection.
-- `/prose:laconic` - the terse register, on request.
+```text
+/prose:polish <draft>
+/prose:compress <draft or target; optional hard limit>
+/prose:laconic <draft>
+```
+
+The automatic `prose` skill does not load for ordinary coding answers,
+incidental prose, or substantive architecture, correctness, security, or design
+reviews. `compress` and `laconic` require explicit user intent, expressed either
+by their slash command or a direct natural-language request.
+
+## Codex
+
+The skill directories use the Agent Skills layout. These commands update the
+same three names without nesting a second copy:
+
+```bash
+mkdir -p \
+  ~/.agents/skills/tacit-prose \
+  ~/.agents/skills/tacit-compress \
+  ~/.agents/skills/tacit-laconic
+cp -R plugins/prose/skills/prose/. ~/.agents/skills/tacit-prose/
+cp -R plugins/prose/skills/compress/. ~/.agents/skills/tacit-compress/
+cp -R plugins/prose/skills/laconic/. ~/.agents/skills/tacit-laconic/
+```
+
+Codex may ignore Claude-specific frontmatter fields. The descriptions retain
+the activation boundaries on both surfaces. Each skill includes its own
+foundations reference.
+
+## Validation
+
+Run the deterministic checks:
+
+```bash
+python3 -m unittest discover -s plugins/prose/tests -v
+python3 plugins/prose/scripts/run_evals.py \
+  --plugin-root plugins/prose \
+  --validate-only
+claude plugin validate .
+claude plugin validate ./plugins/prose
+```
+
+Run live behavior and activation evaluations after `claude auth login`:
+
+```bash
+python3 plugins/prose/scripts/run_evals.py \
+  --plugin-root plugins/prose \
+  --model sonnet \
+  --model opus \
+  --include-baseline \
+  --output-dir eval-results
+```
+
+Each live run uses a new timestamped directory and records the plugin version
+and content hash with every result.
+
+`plugins/prose/scripts/audit_text.py` reports word count, section count, exact
+duplicate sentences, lexically similar paragraphs, repeated sentence openings,
+and configurable flagged patterns. It cannot prove semantic correctness.
+
+## Versioning
+
+The plugin manifest uses semantic versions. Tag releases and bump
+`plugins/prose/.claude-plugin/plugin.json` for behavior changes.
 
 ## Credits
 
-- prose and laconic skills by dabd (MIT, see [LICENSE](LICENSE)).
-- The structure and concision layers encode the method of Joseph M. Williams
-  and Joseph Bizup, *Style: Lessons in Clarity and Grace*. The laconic
-  register blends Verlyn Klinkenborg's sentence-first discipline (*Several
-  Short Sentences About Writing*) with the plainness of Grant's field
-  orders. No text from the books; original wording only.
-- The surface layer adapts the tell inventory of
-  [stop-slop](https://github.com/hardikpandya/stop-slop) by Hardik Pandya
-  (MIT), re-tuned for work writing.
+- The skills are by dabd and licensed under MIT.
+- The structure and concision guidance is informed by Joseph M. Williams and
+  Joseph Bizup, *Style: Lessons in Clarity and Grace*.
+- The laconic register is informed by Verlyn Klinkenborg, *Several Short
+  Sentences About Writing*, and the plain style of Grant's field orders. The
+  wording in this repository is original.
+- The model-phrasing review adapts ideas from Hardik Pandya's
+  [stop-slop](https://github.com/hardikpandya/stop-slop), also licensed under MIT.

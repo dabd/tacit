@@ -1,13 +1,19 @@
 ---
-description: Edit a draft through all three layers (structure, concision, surface) and return a paste-ready version.
+description: Conservatively edit a work-prose draft for clarity, concision, and plain technical language.
 argument-hint: [paste a draft, or run with text selected]
 ---
 
-Apply the **prose** skill in full to the text below (or, if none is given here, to my current selection / the draft we're discussing).
+Apply the `prose` skill to the text below. If no text follows, use the current
+selection or the draft already under discussion.
 
 Draft:
+
 $ARGUMENTS
 
-Run the three layers in order: structure (characters as subjects, actions as verbs, old-to-new flow, emphasis in the stress position), concision (prune, plain diction, figurative-verb tics), surface (tell-phrases, emphasis adverbs, active voice, contrast and rhythm rules). If the genre is identifiable (PR description, code review comment, design doc, incident update, commit message, async message), apply that genre's structure from the playbook.
+Preserve facts, uncertainty, attribution, terminology, reasoning, constraints,
+risks, and the author's voice. Remove confirmed duplication, unnecessary
+wording, vague agency, and conspicuous model-specific phrasing. Apply the
+relevant genre structure when identifiable.
 
-Give me the revised version first, ready to paste. Then list the 2-4 highest-value changes with the principle behind each, briefly. If the draft is already clean, say so instead of inventing edits.
+Return only the revised text unless the user requested feedback or explanation.
+If the draft is already clear, return it unchanged.
