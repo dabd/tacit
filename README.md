@@ -1,48 +1,34 @@
 # tacit
 
-Writing tools for software engineers. The `prose` plugin provides three
-separate operations:
+Writing tools for software engineers. The `prose` plugin keeps three operations
+separate:
 
-| Mode | Purpose | Invocation |
-|---|---|---|
-| `prose` | Conservative drafting and editing | Automatic only for explicit writing or prose-review requests; explicit with `/prose:polish` |
-| `compress` | Maximum reduction under a preservation contract | `/prose:compress` or an explicit request for extreme or hard-limit concision |
-| `laconic` | A terse declarative register that preserves content | `/prose:laconic` or an explicit request for that register |
+| Mode | Purpose and use |
+|---|---|
+| `prose` | Conservative drafting and editing. It activates automatically only for explicit writing or prose-review requests; use `/prose:polish <draft>` directly. It excludes ordinary coding, incidental prose, and substantive architecture, correctness, security, or design reviews. |
+| `compress` | Maximum reduction under a preservation contract. Use `/prose:compress <draft or target; optional hard limit>` or explicitly request extreme or hard-limit concision. |
+| `laconic` | A terse declarative register that preserves content. Use `/prose:laconic <draft>` or explicitly request that register. |
 
-Normal editing, register changes, and semantic compression are intentionally
-separate. See [Foundations](plugins/prose/FOUNDATIONS.md) for the principles,
-sources, exceptions, and Tacit-specific contributions behind that design.
+See [Foundations](plugins/prose/FOUNDATIONS.md) for the design principles,
+sources, exceptions, and Tacit-specific contributions.
 
-## Install in Claude Code
+## Claude Code
 
 ```text
 /plugin marketplace add dabd/tacit
 /plugin install prose@tacit
 ```
 
-For local testing:
+Test a local checkout:
 
 ```bash
 claude --plugin-dir ./plugins/prose
 ```
 
-## Use
-
-```text
-/prose:polish <draft>
-/prose:compress <draft or target; optional hard limit>
-/prose:laconic <draft>
-```
-
-The automatic `prose` skill does not load for ordinary coding answers,
-incidental prose, or substantive architecture, correctness, security, or design
-reviews. `compress` and `laconic` require explicit user intent, expressed either
-by their slash command or a direct natural-language request.
-
 ## Codex
 
-The skill directories use the Agent Skills layout. These commands update the
-same three names without nesting a second copy:
+Install or update the three Agent Skills directories without nesting another
+copy:
 
 ```bash
 mkdir -p \
@@ -54,13 +40,13 @@ cp -R plugins/prose/skills/compress/. ~/.agents/skills/tacit-compress/
 cp -R plugins/prose/skills/laconic/. ~/.agents/skills/tacit-laconic/
 ```
 
-Codex may ignore Claude-specific frontmatter fields. The descriptions retain
-the activation boundaries on both surfaces. Each skill includes its own
-foundations reference.
+Codex may ignore Claude-specific frontmatter fields, but the descriptions retain
+the activation boundaries on Claude Code and Codex. Each skill includes its own
+Foundations reference.
 
-## Validation
+## Validate
 
-Run the deterministic checks:
+Run deterministic checks:
 
 ```bash
 python3 -m unittest discover -s plugins/prose/tests -v
@@ -71,7 +57,7 @@ claude plugin validate .
 claude plugin validate ./plugins/prose
 ```
 
-Run live behavior and activation evaluations after `claude auth login`:
+After `claude auth login`, run live behavior and activation evaluations:
 
 ```bash
 python3 plugins/prose/scripts/run_evals.py \
@@ -82,25 +68,25 @@ python3 plugins/prose/scripts/run_evals.py \
   --output-dir eval-results
 ```
 
-Each live run uses a new timestamped directory and records the plugin version
-and content hash with every result.
+Each live run writes to a new timestamped directory and records the plugin
+version and content hash with every result.
 
-`plugins/prose/scripts/audit_text.py` reports word count, section count, exact
+`plugins/prose/scripts/audit_text.py` reports word and section counts, exact
 duplicate sentences, lexically similar paragraphs, repeated sentence openings,
 and configurable flagged patterns. It cannot prove semantic correctness.
 
 ## Versioning
 
 The plugin manifest uses semantic versions. Tag releases and bump
-`plugins/prose/.claude-plugin/plugin.json` for behavior changes.
+`plugins/prose/.claude-plugin/plugin.json` when behavior changes.
 
 ## Credits
 
-- The skills are by dabd and licensed under MIT.
-- The structure and concision guidance is informed by Joseph M. Williams and
-  Joseph Bizup, *Style: Lessons in Clarity and Grace*.
-- The laconic register is informed by Verlyn Klinkenborg, *Several Short
-  Sentences About Writing*, and the plain style of Grant's field orders. The
-  wording in this repository is original.
-- The model-phrasing review adapts ideas from Hardik Pandya's
-  [stop-slop](https://github.com/hardikpandya/stop-slop), also licensed under MIT.
+- dabd wrote the MIT-licensed skills.
+- Joseph M. Williams and Joseph Bizup's *Style: Lessons in Clarity and Grace*
+  informs the structure and concision guidance.
+- Verlyn Klinkenborg's *Several Short Sentences About Writing* and the plain
+  style of Grant's field orders inform the laconic register. The wording in this
+  repository is original.
+- The model-phrasing review adapts Hardik Pandya's MIT-licensed
+  [stop-slop](https://github.com/hardikpandya/stop-slop).
