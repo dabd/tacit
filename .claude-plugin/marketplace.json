@@ -3,14 +3,21 @@
   "owner": {
     "name": "dabd"
   },
-  "description": "Writing tools for software engineers: one prose editor (structure, concision, surface) and an opt-in laconic register.",
+  "description": "Writing tools for software engineers: conservative prose editing, explicit extreme compression, and an opt-in laconic register.",
   "plugins": [
     {
       "name": "prose",
       "source": "./plugins/prose",
-      "description": "One-pass editor for work prose. Structure and concision via the Williams & Bizup method, surface de-slop adapted from Hardik Pandya's stop-slop, and an opt-in Klinkenborg-inspired laconic register. Replaces the clarity-and-grace, laconic, and stop-slop plugins.",
+      "description": "Draft and edit software-engineering work prose, compress documents under explicit constraints, and apply an optional terse register.",
       "category": "productivity",
-      "tags": ["writing", "editing", "clarity", "style", "ai-tells"]
+      "tags": [
+        "writing",
+        "editing",
+        "clarity",
+        "concision",
+        "technical-writing",
+        "ai-tells"
+      ]
     }
   ]
 }

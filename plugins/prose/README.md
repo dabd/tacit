@@ -1,21 +1,58 @@
 # prose
 
-One-pass editor for work prose, plus an opt-in register. See the
-[marketplace README](../../README.md) for the architecture and install
-steps.
+A Claude Code plugin for software-engineering prose.
 
 ## Components
 
-- `skills/prose/` - the editing skill. Three layers in order: structure
-  (characters as subjects, actions as verbs, old-to-new flow, stress
-  position), concision (prune, plain diction, figurative-verb tics), surface
-  (tell-phrases, emphasis adverbs, active voice, earned contrast, rhythm).
-  Genre structures live in `skills/prose/references/genre-playbook.md`.
-- `skills/laconic/` - the terse register. Opt-in only; it changes voice, so
-  it never fires on a generic "edit this".
-- `commands/polish.md` - `/prose:polish`, the full pass on a pasted draft.
-- `examples/before-after.md` - worked fixtures, one per diagnosis tag.
+- `FOUNDATIONS.md`: principles, sources, exceptions, and Tacit-specific
+  contributions.
+- `skills/prose/`: conservative drafting and editing that preserves facts,
+  uncertainty, attribution, terminology, reasoning, and voice.
+- `skills/compress/`: explicit extreme compression with semantic inventory,
+  claim-level deduplication, reconstruction, and separate redundancy and
+  preservation audits.
+- `skills/laconic/`: an explicit terse register that preserves content.
+- `agents/redundancy-reviewer.md`: deletion and merge recommendations only.
+- `agents/preservation-reviewer.md`: missing or altered required information.
+- `commands/polish.md`: compatibility command for `/prose:polish`.
+- `evals/`: activation and behavior cases.
+- `scripts/audit_text.py`: deterministic measurements for text.
+- `scripts/run_evals.py`: corpus validation and live cross-model evaluation.
 
-Enforcement is prompt-side: the skill applies the layers while drafting, and
-the shared prose-rules floor keeps the mechanical rules in view. Replies have
-no linter.
+## Commands
+
+```text
+/prose:polish <draft>
+/prose:compress <draft or target; optional hard limit>
+/prose:laconic <draft>
+```
+
+## Design rules
+
+1. Normal editing preserves information and voice.
+2. Clear, literal, domain-specific language is the default.
+3. Genre choices are preferences, not universal prohibitions.
+4. Clean prose should receive few or no edits.
+5. Extreme compression requires explicit user intent.
+6. Compression audits claims rather than only repeated wording.
+7. General tests identify new model-specific phrasing; regex patterns are smoke
+   checks only.
+
+## Test
+
+From the repository root:
+
+```bash
+python3 -m unittest discover -s plugins/prose/tests -v
+python3 plugins/prose/scripts/run_evals.py \
+  --plugin-root plugins/prose \
+  --validate-only
+python3 plugins/prose/scripts/audit_text.py \
+  plugins/prose/evals/fixtures/concise.md \
+  --fail-duplicates --fail-near-duplicates --fail-patterns --json
+python3 plugins/prose/scripts/audit_text.py \
+  plugins/prose/evals/fixtures/duplicated.md \
+  --fail-duplicates --fail-near-duplicates --json
+```
+
+The concise fixture must exit 0. The duplicated fixture must exit 1.

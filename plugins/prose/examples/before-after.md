@@ -1,113 +1,75 @@
 # Worked examples
 
-Original before/after pairs, tagged by the diagnosis the skill applies.
-These are auditable fixtures: each shows one principle, the broken input,
-the fix, and why. All examples are original, written for this plugin. They
-double as regression checks: if an edit to the skill changes how it handles
-one of these, the change is visible here.
+Each example isolates one behavior. These examples are not exact-output tests.
 
-Tags map to the layers in `../skills/prose/SKILL.md`: `action-as-noun`,
-`abstract-subject`, `old-to-new`, `stress-position`, `shape`, `concision`,
-`surface`, `contrast`.
+## Concrete actor and verb
 
----
+**Before:** There was a failure in the retry logic that resulted in duplicate
+writes.
 
-## action-as-noun
+**After:** The retry logic failed and wrote duplicates.
 
-A live verb is buried in a noun (a nominalization). Find it, free it.
+## Claim-level duplication
 
-**Before:** The team made a decision about the deprecation of the v1 endpoint.
-**After:** The team decided to deprecate the v1 endpoint.
-**Why:** `decision` to decide, `deprecation` to deprecate. Two buried verbs
-freed, the sentence shortens, the action becomes plain.
+**Before:**
 
----
+The migration is safe because the old column remains available during rollout.
 
-## abstract-subject
+### Rollout safety
 
-The grammatical subject is an abstraction, so the reader cannot see who acts.
+The old column remains available while the new code rolls out, which makes the
+migration safe.
 
-**Before:** Consideration of the cache invalidation bug is happening on the
-platform side.
-**After:** The platform team is looking into the cache invalidation bug.
-**Why:** `Consideration ... is happening` hides the actor. Put the real
-character (platform team) in the subject and let it act.
+**After:**
 
----
+The migration is safe because the old column remains available during rollout.
 
-## old-to-new
+## Literal operation
 
-A sentence opens on new information instead of connecting to what came before.
+**Before:** This change unlocks a path for requests to land in the fallback
+queue.
 
-**Before:** We added a read-through cache. A 40% latency drop came from it.
-**After:** We added a read-through cache. That dropped latency 40%.
-**Why:** The second sentence now opens on the familiar idea (`That` = the
-cache) and ends on the new fact (the 40% drop). The reader rides the link.
+**After:** This change sends failed requests to the fallback queue.
 
----
+`ship a release`, `land a patch`, and `unlock a mutex` can be established domain
+uses. Edit them only when they fail to name the operation accurately.
 
-## stress-position
+## Unfamiliar conspicuous phrase
 
-The most important information sits mid-sentence, where the reader weights it
-least, while a throwaway qualifier takes the end.
+**Before:** The hinge-point observation is that retries must be idempotent.
 
-**Before:** This breaks the nightly reconciliation job if we deploy on
-Friday, I think.
-**After:** If we deploy on Friday, this breaks the nightly reconciliation job.
-**Why:** The end of a sentence carries the most weight. Move the consequence
-there and drop the reflex hedge.
+**After:** Retries must be idempotent.
 
----
+The edit removes framing that adds no information. It does not depend on a list
+of known phrases.
 
-## shape
+## Preserve uncertainty and attribution
 
-The reader waits through a long wind-up and an interruption before reaching
-the subject and verb.
+**Before:** According to Priya, connection-pool exhaustion may cause the
+timeout, but the traces are incomplete.
 
-**Before:** Because of the fact that the auth service, which another team
-owns, rate-limits us, retries can fail.
-**After:** Retries can fail because the auth service (owned by another team)
-rate-limits us.
-**Why:** Subject and verb (`Retries can fail`) arrive first. The conditions
-trail behind instead of blocking the way in.
+**Bad edit:** Connection-pool exhaustion causes the timeout.
 
----
+**After:** Priya said connection-pool exhaustion may cause the timeout; the
+traces are incomplete.
 
-## concision
+## Extreme compression reconstructs
 
-Inflated phrasing and filler pad the sentence without adding meaning.
+**Before:**
 
-**Before:** In order to facilitate the utilization of the new client, we will
-be providing documentation at this point in time.
-**After:** To help people use the new client, we are writing docs now.
-**Why:** `in order to` to to, `facilitate the utilization of` to help use,
-`at this point in time` to now. Every inflated phrase swapped for the plain
-word.
+We propose moving token refresh into a single-flight section. The current
+implementation permits two concurrent requests to refresh the token. The second
+refresh can overwrite the first token and log the user out. The proposal
+serializes token refresh so only one refresh can happen at a time.
 
----
+**After:**
 
-## surface
+Serialize token refresh: concurrent refreshes can overwrite the token and log
+the user out.
 
-The sentences are clear and tight, yet the prose still reads as generated:
-tell-phrases, emphasis adverbs, a figurative verb.
+## Clean text remains unchanged
 
-**Before:** It's worth noting that this basically lets us leverage the
-existing retry queue, which is a huge win for reliability.
-**After:** This reuses the existing retry queue, so transient failures now
-retry instead of dropping.
-**Why:** Throat-clearing opener cut, `basically` cut, `leverage` swapped for
-the plain verb, and the vague `huge win` replaced by the specific effect.
+**Input:** The worker retries failed writes three times, then sends them to the
+dead-letter queue.
 
----
-
-## contrast
-
-A telegraphed reversal manufactures drama around a point nobody disputed.
-
-**Before:** This isn't just a config change. It's a fundamental shift in how
-we deploy.
-**After:** This changes the deploy order: migrations now run before the
-rollout, so a failed migration blocks the release.
-**Why:** The `not just X` setup argues with no one. State what changed and
-why the reader should care. (A contrast survives only when it corrects a
-position the reader holds.)
+**Expected:** No edit.

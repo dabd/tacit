@@ -1,239 +1,144 @@
 ---
 name: prose
 description: >-
-  Use when drafting, editing, reviewing, or giving feedback on any prose a
-  human will read - a Slack/Teams message, email, PR description, code review
-  comment, design doc, RFC, technical spec, incident update, postmortem,
-  status report, standup note, commit message, ticket, README, or doc
-  comment - including when the user pastes text and says "fix this", "tighten
-  this", "make this sound better", or "is this clear?", and before sending or
-  posting any of the above. Not for code itself, only the prose humans read.
+  Use when the user explicitly asks to draft, rewrite, tighten, clarify, proofread, or review the wording, grammar, style, or readability of software-engineering work prose. Do not use for ordinary coding answers, incidental prose, or substantive code, architecture, correctness, security, or design review unless the user also asks for prose editing. Do not use for extreme compression or an explicitly terse register.
+user-invocable: false
 ---
 
 # Prose
 
-One skill, one pass, three layers in order: **structure** (is each sentence
-clear?), **concision** (is it tight?), **surface** (does it read human?).
-This skill merges the former clarity-and-grace and stop-slop pipeline. The
-ordering and the tie-breakers live here, in the text you are reading now,
-not in a protocol document that never loads.
+Edit software-engineering work prose conservatively. Preserve the author's
+meaning and recognisable voice. A clear draft may need no changes.
 
-Sources, encoded as method in original wording: Williams and Bizup (*Style:
-Lessons in Clarity and Grace*) for structure and concision; Verlyn
-Klinkenborg (*Several Short Sentences About Writing*) for sentence
-discipline; Hardik Pandya's stop-slop (MIT) for the tell inventory, re-tuned
-for work writing.
+## Rule priority
 
-The audience is a software engineer writing to coworkers. The goal is
-writing that a busy, distracted reader understands on the first pass,
-in the author's own voice.
+### Semantic invariants
 
-## Prime directives
+Unless the user explicitly requests a content change, preserve:
 
-1. **Clarity first, grace last.** Make it understood before you make it
-   pretty. Rhythm and balance are the final 10%, applied once the prose is
-   clear and concise.
-2. **Preserve the author's voice.** You are an editor, not a ghostwriter.
-   Keep their phrasing, their jokes, their directness. Fix what blocks
-   understanding; leave what is merely theirs. A revision the author doesn't
-   recognize is a failed revision.
-3. **Teach while you fix.** Name the principle behind each change in a few
-   words, so next time they catch it themselves.
-4. **Don't over-edit.** If a draft is already clean, say so and stop.
-5. **Drafting counts.** When you write the first version yourself, apply all
-   three layers before showing it. Don't draft slop and wait to be asked to
-   clean it.
+- facts, intent, decisions, and requirements;
+- uncertainty, assumptions, confidence, and attribution;
+- numbers, identifiers, links, code symbols, and technical terms;
+- reasoning, evidence, constraints, risks, trade-offs, and actions;
+- the author's recognisable voice.
 
-## Layer 1: structure
+Do not invent context, increase certainty, or assign unsupported blame.
 
-The single most useful move, Williams's own first step: **look at the first
-seven or eight words of each sentence.** Most trouble lives there - abstract
-subjects, long wind-ups, the action hidden in a noun. If a sentence opens
-concrete and reaches a strong verb fast, the rest usually takes care of
-itself.
+Foundation: [Preserve meaning](FOUNDATIONS.md#preserve-meaning),
+[Preserve uncertainty](FOUNDATIONS.md#preserve-uncertainty), and
+[Preserve terminology](FOUNDATIONS.md#preserve-terminology).
 
-### 1. Characters become subjects
+### Strong defaults
 
-Find the people, teams, services, systems *doing* things and make them the
-grammatical subjects.
+Prefer:
 
-Input: There was a failure in the retry logic that led to duplicate writes.
-Output: The retry logic failed and wrote duplicates.
-Why: "there was" hides the actor; name what failed and let it act.
+- known people, teams, services, components, or processes as subjects;
+- verbs that name the action;
+- literal, domain-specific wording;
+- one stable term for each concept;
+- one clear occurrence of each claim;
+- the result, request, decision, or status near the start when that helps the
+  reader act.
 
-### 2. Actions become verbs (hunt nominalizations)
+Foundation: [Prefer concrete agency](FOUNDATIONS.md#prefer-concrete-agency),
+[Remove unnecessary words](FOUNDATIONS.md#remove-unnecessary-words),
+[Eliminate duplicated claims](FOUNDATIONS.md#eliminate-duplicated-claims),
+[Prefer literal language](FOUNDATIONS.md#prefer-literal-language), and
+[Prefer common technical vocabulary](FOUNDATIONS.md#prefer-common-technical-vocabulary).
 
-A nominalization is a verb or adjective turned into a noun: *decide* into
-*decision*, *fail* into *failure*, *implement* into *implementation*.
-Tell-tale endings: -tion, -ment, -ance, -ence, -ity, -al, -ing-as-noun.
-Suspect one whenever it sits in the subject or after a weak verb (make,
-perform, conduct, provide, achieve, do).
+### Genre-dependent preferences
 
-Input: We need to make a determination about whether deprecation of the v1
-endpoint will have an impact on downstream consumers.
-Output: We need to determine whether deprecating the v1 endpoint will affect
-downstream consumers.
-Why: three buried actions freed; the sentence drops by a third.
+Punctuation, sentence length, passive voice, fragments, repetition, headings,
+and paragraph structure depend on the genre. Change them only when they reduce
+clarity or add unnecessary rhetoric. Read `references/genre-playbook.md` when
+the genre is identifiable.
 
-Keep nominalizations that are the real subject ("the **decision** was
-reversed") or terms of art (*authentication*, *deployment*).
+## Activation boundary
 
-### 3. Old information before new (cohesion)
+Use this skill only for an explicit writing or prose-review request. A request
+to review an RFC, design, pull request, incident, or ticket for technical
+correctness does not qualify unless the user also asks about its writing.
 
-Open each sentence with something familiar from the previous one; end on the
-new thing. Choppy "and then... and then" prose is usually new information
-crashing in at the front.
+Do not apply this skill to code. Do not interpret `tighten` as permission to
+remove useful information or reconstruct the document. Use `compress` only for
+an explicit request for extreme reduction or a hard limit. Use `laconic` only
+for an explicit request for that terse register.
 
-Input: We added a cache layer. A 40% latency drop came from it.
-Output: We added a cache layer. That dropped latency 40%.
-Why: the second sentence now opens on the familiar idea and ends on the new
-fact.
+## Editing sequence
 
-### 4. Consistent topics (coherence)
+### 1. Establish purpose and constraints
 
-Across a paragraph, keep the subjects consistent and concrete so the passage
-feels like it is about one thing. If every sentence opens on a different
-abstract noun, the paragraph wanders even when each sentence is fine.
+Identify the genre, reader, intended result, and any explicit tone, length, or
+format constraint.
 
-### 5. Emphasis in the stress position
+### 2. Improve sentence structure
 
-The end of a sentence is where the reader's mind puts the weight. Put the
-most important or newest information there; don't let a throwaway qualifier
-("in most cases", "I think", "for now") dribble off the end.
+- Move a known and relevant actor or system into the subject.
+- Express the main action as a verb.
+- Move the subject and verb earlier when introductory wording delays them.
+- Connect sentences by placing known information before new information when
+  that improves comprehension.
+- Keep passive voice when the actor is unknown, irrelevant, intentionally
+  omitted in a blameless account, or less important than the affected system.
 
-Input: This will probably break the nightly batch job if we ship Friday, in
-my opinion.
-Output: If we ship Friday, this will probably break the nightly batch job.
-Why: the consequence, the thing they act on, now sits last.
+### 3. Remove unnecessary wording and duplication
 
-### 6. Subject and verb arrive fast
+- Remove words that add no meaning.
+- Keep one honest hedge when uncertainty is real.
+- Replace inflated phrases with ordinary equivalents.
+- Find repeated claims across headings, summaries, body sections, and
+  conclusions. Keep more than one occurrence only when each serves a distinct
+  function.
+- Preserve evidence, examples, alternatives, and qualifications that support a
+  decision or prevent ambiguity.
 
-Open with the subject and verb, then extend with conditions and clauses.
-Long wind-ups and big interruptions between subject and verb are the main
-reason a sentence feels hard.
+Normal editing is conservative. Do not reconstruct the document only to make it
+shorter.
 
-Input: Because of the fact that, as was mentioned in the sync, the auth
-service, which is owned by another team, has rate limits, retries can fail.
-Output: Retries can fail because the auth service (owned by another team)
-has rate limits, as we mentioned in the sync.
+### 4. Check for model-specific wording
 
-## Layer 2: concision
+Use general tests instead of treating individual words as prohibited:
 
-Cut without changing meaning, in order of payoff:
+- **Literal-operation test:** Does the verb name the actual action? If not,
+  replace it with the literal operation.
+- **Conspicuous-phrase test:** Is the wording fashionable, unusually memorable,
+  or reusable in unrelated documents without adding meaning? Replace it with
+  ordinary wording or delete it.
+- **Specific-effect test:** Does an evaluative word replace an observable
+  result? State the result.
+- **Agency test:** Does an abstraction act when a relevant person, team,
+  service, component, or process is known? Name the actor. Keep abstract or
+  system agency when it is accurate.
 
-- **Delete meaningless words:** actually, really, basically, just, very,
-  quite, in order to, the fact that, it should be noted that.
-- **Cut what's implied:** "future plans", "past history", "end result",
-  "completely eliminate", "advance warning".
-- **Phrase to word:** "due to the fact that" = because; "at this point in
-  time" = now; "in the event that" = if; "has the ability to" = can.
-- **Affirm the negative:** "not many" = few; "did not include" = omitted.
-- **Hedge once, honestly.** Keep one hedge when the uncertainty is real; cut
-  the reflex stack ("I think maybe we could possibly").
-- **Plain over inflated:** utilize = use; facilitate = help; commence =
-  start; methodology = method. Inflated diction signals effort, not
-  competence. Keep genuine terms of art (idempotent, backpressure,
-  eventual consistency); plainness cuts fake sophistication, never real
-  technical vocabulary.
-- **One name per thing.** Pick a term and reuse it. Elegant variation ("the
-  service"... "the system"... "the component" for one thing) costs the
-  reader certainty.
+Terms such as `land`, `ship`, `unlock`, `leverage`, `drive`, and
+`load-bearing` are examples, not prohibited words. Keep literal and established
+domain uses. Edit a use only when it obscures the actual operation or adds no
+information.
 
-**Figurative-verb tics.** A verb borrowed from physical action to dress up
-an abstract one is a tell. The test is metaphor, not the word: the literal
-or domain sense is fine.
+Foundation: [Prefer literal language](FOUNDATIONS.md#prefer-literal-language),
+[Prefer common technical vocabulary](FOUNDATIONS.md#prefer-common-technical-vocabulary),
+and [Tacit-specific contributions](FOUNDATIONS.md#tacit-specific-contributions).
 
-| Tic (figurative) | Use instead | Fine (literal/domain) |
-|---|---|---|
-| land a point/message | make, put, end on | a plane lands |
-| ship a decision/narrative | make, finalize, send | ship a release |
-| leverage the tooling | use, apply | financial leverage |
-| delve/dive into | examine, look at | a diver dives |
-| unlock value/potential | enable, allow | unlock a file |
-| tap into | use, draw on | tap a pipe |
-| foster/drive/fuel engagement | build, cause, support | drive a car |
+Also remove introductory wording, emphasis adverbs, transitions, and rhetorical
+reversals when they add no information.
 
-**The guardrail: cut words, never load-bearing reasoning.** In a design doc,
-PR, or postmortem, the *why* (why this approach, why not the alternative,
-what the risk is) is the payload, not filler. Be economical with words and
-generous with reasons.
+### 5. Verify the result
 
-## Layer 3: surface
+Before returning the text:
 
-Run last, on finished sentences. This layer removes the patterns that make
-prose read as generated.
+- confirm that all required content and qualifications remain;
+- confirm that terminology and attribution are unchanged;
+- confirm that repeated claims serve distinct functions;
+- confirm that no sentence was added only to improve rhythm;
+- leave clean text unchanged.
 
-1. **Tell-phrases die on sight:** "it's worth noting", "here's the thing",
-   "let me be clear", "let that sink in", "at the end of the day",
-   "the key takeaway", "I wanted to flag", "this matters because", and
-   vague declaratives ("the implications are significant") - name the
-   implication instead.
-2. **Adverbs:** cut emphasis adverbs (really, actually, basically, simply,
-   literally, genuinely, honestly, truly, incredibly, fundamentally,
-   essentially, importantly, crucially, notably, interestingly). Keep
-   information adverbs (not, never, often, still, already, only). Restore an
-   emphasis adverb only if its removal changes meaning.
-3. **Active voice, named actors.** No false agency: decisions don't
-   "emerge", cultures don't "shift" - someone decides, people change
-   behavior. Exception: blameless postmortems and genuinely unknown actors;
-   the genre playbook governs there.
-4. **No em or en dashes.** Use a comma, colon, period, parenthesis, or
-   ' - '. (House rule; a hook normalizes files, replies are on you.)
-5. **The contrast templates are banned, even for earned contrasts.** "Not
-   just X but Y", "isn't X, it's Y", "the answer isn't X", and negative
-   listings ("It's not A. It's not B. It's C.") never appear. When the
-   contrast is real content (X is a position the reader holds and you are
-   correcting it), state Y first with its evidence, then demote X
-   explicitly: "This is a correctness bug: writes duplicate. The latency
-   hit is secondary." When X is a strawman nobody holds, delete it and
-   state Y. Genuine parallel ideas may keep parallel form ("first...,
-   then..."); the manufactured-reversal template goes regardless.
-6. **Fragments are rationed.** At most one deliberate fragment per message,
-   where the emphasis is earned. A staccato run reads as performance. (When
-   the user asked for the laconic register, that skill governs sentence
-   length instead.)
-7. **Rhythm:** vary sentence length and paragraph endings; don't close every
-   paragraph on a punchline. Three-item lists are fine here - this is work
-   writing, where completeness beats blog cadence.
-8. **Trust the reader.** No meta-commentary ("let me walk you through"), no
-   permission-granting ("and that's okay"), no quotable-isms. State facts
-   plainly.
+## Response behavior
 
-## Genres
+For drafting and rewriting, return only the paste-ready text unless the user
+asks for critique, alternatives, annotations, or rationale.
 
-Each genre has a shape: what goes first, how long, how blunt. When the task
-names or implies one (PR description, code review comment, design doc or
-RFC, incident update or postmortem, async message, status update, commit
-message, ticket), read `references/genre-playbook.md` before editing. The
-unifying rule: bottom line up front.
+For feedback, identify only issues that materially affect meaning or reader
+action. Offer a revision when useful.
 
-## The laconic register (opt-in)
-
-A terse, declarative voice lives in the separate `laconic` skill. It is a
-register choice, never a correction: apply it only when the user explicitly
-asks for laconic, terse, clipped, or spare prose, or runs /prose:laconic.
-Generic "edit this" requests never trigger it.
-
-## How to respond
-
-- **"Fix this" / "tighten this":** revised version first, ready to paste.
-  Then the 2-4 highest-value changes and the principle behind each. Don't
-  annotate every comma.
-- **"Is this clear?" / "feedback?":** diagnose before you rewrite. Point at
-  the sentences that block the reader, name why, then offer a revision.
-- **"Help me write a [PR / doc / update]":** draft it through all three
-  layers, then point out the one or two structural choices you made.
-
-Keep your own explanation as clean as the revision; practice what the skill
-preaches. Two presentation rules: a draft you produce is your prose and
-these rules apply wherever it appears (inline or blockquoted), so write it
-clean; and when you name a phrase you cut, put it in backticks
-(`worth noting`), and put any verbatim third-party text you quote in a code
-fence. Backticks and fences are the only exemptions.
-
-## Enforcement
-
-A PreToolUse hook normalizes unicode dashes in files you write. Everything
-else - the mechanical floor and the judgment layers alike - is on you; no
-linter checks your replies. Apply the floor as you draft, not as a cleanup
-pass.
+Do not append an unsolicited explanation, change summary, or offer of further
+work.
