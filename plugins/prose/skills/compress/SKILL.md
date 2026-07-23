@@ -1,131 +1,76 @@
 ---
 name: compress
 description: >-
-  Use when the user explicitly invokes /prose:compress or asks for extreme, maximum, minimal, aggressive, or hard-limit concision, semantic reduction, or claim-level deduplication. Do not use for ordinary editing or a generic request to tighten prose.
-argument-hint: [text or target; optional hard word, section, or format limit]
-effort: high
+  Use when the user explicitly asks for extreme, maximum, minimal, aggressive, or hard-limit compression, semantic reduction, or claim-level deduplication. Do not use for ordinary editing or a generic request to tighten prose.
 ---
 
 # Compress
 
-Reduce the text to the minimum length that preserves the information required
-for its purpose. This mode may remove optional information and reconstruct the
-document. It requires explicit user intent.
+Select the information required for the document's purpose and express it in
+the minimum compatible space.
 
-Use `$ARGUMENTS`. If it is empty, use the current selection, file, or draft
-already under discussion.
+Compress may remove optional content after building the semantic inventory. It does not choose the register.
 
-Foundation: [Compression philosophy](FOUNDATIONS.md#compression-philosophy),
-[Compress](FOUNDATIONS.md#compress), and
-[Tacit-specific contributions](FOUNDATIONS.md#tacit-specific-contributions).
+Follow the [shared preservation contract](../../FOUNDATIONS.md#shared-preservation-contract),
+the [Compress operation](../../FOUNDATIONS.md#compress), and the
+[composition rule](../../FOUNDATIONS.md#composition).
 
-## Preservation contract
+## Workflow
 
-Build a private semantic inventory containing:
+### 1. Establish purpose and limits
 
-- required claims, conclusions, decisions, and requests;
-- evidence needed to support them;
-- constraints, requirements, risks, and trade-offs;
+Identify the reader, intended result, required format, and any word, section, or
+other hard limit.
+
+### 2. Build one semantic inventory
+
+Inventory all semantic content before classifying it as required or optional.
+
+Record:
+
+- facts, claims, conclusions, decisions, requests, and proposals;
+- proposal status and modality, including distinctions such as must, should,
+  may, can, planned, and decided;
+- evidence and reasoning, including the claims they support;
+- requirements, constraints, risks, trade-offs, and qualifications;
 - actions, owners, and deadlines;
-- uncertainty, confidence, assumptions, and attribution;
-- numbers, names, identifiers, links, code symbols, and technical terms needed
-  by the reader.
+- uncertainty, assumptions, confidence, and attribution;
+- numbers, names, identifiers (IDs), links, code symbols, and technical terms.
 
-Determine required content from the document purpose and semantic function, not
-only from labels supplied by the user. Explicitly marked content must remain.
-Background, examples, and history must also remain when they support,
-disambiguate, constrain, or materially qualify a required claim. Other context,
-examples, transitions, repeated explanations, and framing are optional.
-
-## Hard constraints
-
-Treat supplied word, section, and format limits as hard when they are compatible
-with the preservation contract. Preservation takes priority when they conflict.
-Do not claim that both constraints were met when they were not.
-
-## Bounded workflow
-
-### 1. Build the semantic inventory
-
-Record the required information in private working notes. Normalise equivalent
-claims so wording differences do not hide duplication.
-
-### 2. Group duplicate claims
-
-Compare claims across titles, headings, summaries, sections, examples, and
-conclusions. Keep one clear statement unless repeated occurrences serve
-different required functions.
+Normalise equivalent claims so wording differences do not hide duplication.
+Only after this inventory is complete may content be classified as optional.
+Keep background, examples, history, and repetition when they support,
+disambiguate, constrain, or materially qualify required information.
 
 ### 3. Reconstruct once
 
-Write a new version from the retained inventory. Do not repeatedly shorten the
-original structure.
+Write one candidate from the retained inventory. Do not repeatedly shorten the
+source or candidate. Put the main result, decision, or request first when
+appropriate. Use the fewest sections that preserve necessary navigation and one
+stable term for each concept. Do not add framing, summaries, transitions, or
+decorative wording that contributes no information.
 
-- Put the main result, decision, or request first when appropriate.
-- Use the fewest sections that preserve navigation.
-- Prefer deletion to paraphrase.
-- Use one term for each concept.
-- Do not add scene-setting, summaries, transitions, or decorative wording.
+When both modifiers are requested, apply Compress first and Laconic second.
 
-### 4. Run independent audits
+### 4. Perform one final preservation check
 
-**Redundancy audit**
+After any Laconic pass, compare the final candidate with both the source and the
+semantic inventory. Confirm that no retained information was dropped, altered,
+weakened, strengthened, newly implied, or misattributed. Confirm that each
+sentence contributes unique required information and that every compatible
+limit is met. Do not start another reconstruction.
 
-For every sentence, identify the unique required information it contributes.
-Delete or merge a sentence if removing it loses no required information. Compare
-claims across sections, not only adjacent wording.
+## Hard-limit conflict
 
-**Wording audit**
+Treat a supplied limit as hard when it is compatible with preservation.
+Preservation takes priority when the constraints conflict. Do not claim to have
+met both constraints. Return:
 
-- Literal-operation test: use a verb that names the actual action.
-- Conspicuous-phrase test: replace distinctive or fashionable wording that
-  adds no meaning.
-- Specific-effect test: replace vague evaluation with an observable result.
-- Agency test: name the relevant actor or system when known.
+    Constraint conflict: preserving required information needs [actual amount], above the [requested limit].
 
-**Preservation audit**
-
-Compare the candidate with both the source and semantic inventory. Find missing,
-altered, weakened, strengthened, newly implied, or misattributed required
-information.
-
-For text longer than about 500 words, high-stakes material, or an explicit
-request for adversarial review, use `redundancy-reviewer` and
-`preservation-reviewer` independently when agent delegation is available. Give
-each reviewer the source, candidate, exact semantic inventory, document purpose,
-and all hard limits. If delegation is unavailable, run the audits sequentially.
-
-### 5. Apply one repair pass
-
-Apply the two audit reports in one repair pass. Restore only required information
-and remove only confirmed redundancy. Do not start another reconstruction.
-
-### 6. Validate without rewriting
-
-Check the repaired result against the source, inventory, and constraints. End
-the workflow after this check. If required content exceeds a hard limit, return
-the constraint notice and the shortest complete version. Do not perform another
-rewrite cycle.
-
-## Exit criteria
-
-- Every sentence contributes unique required information.
-- Each material claim appears once unless repetition has a distinct function.
-- No heading only repeats its first sentence.
-- All required facts, qualifications, attribution, identifiers, and actions
-  remain.
-- No unsupported certainty, implication, or blame was introduced.
-- Every compatible hard limit is met.
+    [shortest complete version]
 
 ## Output
 
-Return only the compressed text unless the user asks for the inventory, audits,
-counts, or explanation.
-
-When a hard limit is incompatible with preservation, use this sole exception:
-
-```text
-Constraint conflict: preserving required information needs [actual amount], above the [requested limit].
-
-[shortest complete version]
-```
+Return only the paste-ready compressed text unless the user asks for the
+inventory, counts, or an explanation.

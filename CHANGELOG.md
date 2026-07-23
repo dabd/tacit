@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 - 2026-07-23
+
+- Define Prose as the base skill, Compress and Laconic as modifiers, and
+  Compress-then-Laconic as the required composition order.
+- Simplify the package by removing the custom evaluator, text auditor, reviewer
+  agents, fixtures, and tests used only by that machinery.
+- Consolidate shared rules and citations in one canonical `FOUNDATIONS.md`.
+- Add native Codex plugin and marketplace metadata alongside the Claude
+  packaging.
+- Correct the compression example and document installation, invocation,
+  updates, and validation for both surfaces.
+
 ## 0.2.0 - 2026-07-20
 
 - Narrow automatic prose activation to explicit writing and wording requests.

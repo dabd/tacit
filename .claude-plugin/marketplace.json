@@ -3,12 +3,12 @@
   "owner": {
     "name": "dabd"
   },
-  "description": "Writing tools for software engineers: conservative prose editing, explicit extreme compression, and an opt-in laconic register.",
+  "description": "Writing tools for software engineers with conservative editing and optional compression and laconic modifiers.",
   "plugins": [
     {
       "name": "prose",
       "source": "./plugins/prose",
-      "description": "Draft and edit software-engineering work prose, compress documents under explicit constraints, and apply an optional terse register.",
+      "description": "Draft and edit software-engineering prose with a conservative base skill and optional compression and laconic modifiers.",
       "category": "productivity",
       "tags": [
         "writing",

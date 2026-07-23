@@ -1,7 +1,7 @@
 {
   "name": "prose",
-  "description": "Draft and conservatively edit software-engineering work prose. Includes explicit extreme-compression and laconic modes.",
-  "version": "0.2.0",
+  "description": "Draft and edit software-engineering prose with conservative editing and optional compression and laconic modes.",
+  "version": "0.3.0",
   "author": {
     "name": "dabd"
   },

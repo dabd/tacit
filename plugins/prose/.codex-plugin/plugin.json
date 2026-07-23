@@ -1,0 +1,35 @@
+{
+  "name": "prose",
+  "description": "Draft and edit software-engineering prose with conservative editing and optional compression and laconic modes.",
+  "version": "0.3.0",
+  "author": {
+    "name": "dabd"
+  },
+  "homepage": "https://github.com/dabd/tacit",
+  "repository": "https://github.com/dabd/tacit",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "editing",
+    "clarity",
+    "concision",
+    "technical-writing",
+    "ai-tells",
+    "communication"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Tacit Prose",
+    "shortDescription": "Edit, compress, and restyle engineering prose.",
+    "longDescription": "Draft and edit software-engineering prose with conservative editing and optional compression and laconic modes.",
+    "developerName": "dabd",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://github.com/dabd/tacit",
+    "defaultPrompt": [
+      "Polish this software-engineering draft."
+    ]
+  }
+}

@@ -64,8 +64,25 @@ serializes token refresh so only one refresh can happen at a time.
 
 **After:**
 
-Serialize token refresh: concurrent refreshes can overwrite the token and log
-the user out.
+We propose single-flight token refresh: concurrent refreshes can overwrite the
+token and log the user out.
+
+## Compress plus Laconic
+
+**Before:**
+
+The old column remains available during rollout. Keeping it available preserves
+compatibility while the new reader is deployed.
+
+### Cleanup
+
+The old column remains available during rollout. We should remove the old
+column after every reader migrates.
+
+**After:**
+
+The old column remains available during rollout for compatibility. We should
+remove it after every reader migrates.
 
 ## Clean text remains unchanged
 
