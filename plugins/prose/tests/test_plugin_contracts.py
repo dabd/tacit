@@ -55,9 +55,9 @@ class PluginContractsTest(unittest.TestCase):
             "allowed-tools",
         }
         boundaries = {
-            "prose": ("draft", "ordinary coding"),
-            "compress": ("extreme", "ordinary editing"),
-            "laconic": ("including when combined with compression", "compression alone"),
+            "prose": ("draft", "ordinary coding", "technical reviews"),
+            "compress": ("extreme", "ordinary editing", "hard length limit"),
+            "laconic": ("including with compression", "compression alone"),
         }
         for skill, terms in boundaries.items():
             with self.subTest(skill=skill):
@@ -71,8 +71,7 @@ class PluginContractsTest(unittest.TestCase):
                 )
                 self.assertIsNotNone(description)
                 normalized = " ".join(description.group(1).split()).lower()
-                self.assertIn("use when", normalized)
-                self.assertIn("do not use", normalized)
+                self.assertIn("not for", normalized)
                 for term in terms:
                     self.assertIn(term, normalized)
                 self.assertNotRegex(content, r"/prose(?::[a-z-]+)?")
@@ -176,7 +175,14 @@ class PluginContractsTest(unittest.TestCase):
             "codex": json.loads(plugin_text(".codex-plugin/plugin.json")),
         }
         for manifest in manifests.values():
-            self.assertEqual((manifest["name"], manifest["version"]), ("prose", "0.3.0"))
+            self.assertEqual(manifest["name"], "prose")
+            self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+(?:\+[0-9A-Za-z.-]+)?$")
+        # Codex's local reinstall helper adds build metadata without changing
+        # the shared release version or Claude's cache key.
+        self.assertEqual(
+            manifests["claude"]["version"].split("+", 1)[0],
+            manifests["codex"]["version"].split("+", 1)[0],
+        )
         self.assertEqual(manifests["codex"]["skills"], "./skills/")
         shared_fields = (
             "description",

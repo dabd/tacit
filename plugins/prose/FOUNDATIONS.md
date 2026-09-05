@@ -33,9 +33,11 @@ stays unchanged.
 ## Compress
 
 Compress removes optional content only after identifying the information
-required for the document's purpose. It builds one semantic inventory,
-reconstructs once from the retained information, and checks the result against
-both the source and the inventory. It does not impose a terse register.
+required for the document's purpose. It uses a semantic inventory proportional
+to the text's complexity, reconstructs when useful, and checks the result
+against both the source and retained information. Concrete defects warrant
+repairs and targeted rechecks, not a fixed pass count or endless rewriting.
+It does not impose a terse register.
 
 ## Laconic
 
